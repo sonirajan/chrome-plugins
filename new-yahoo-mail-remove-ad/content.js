@@ -56,7 +56,8 @@ function fixLayout() {
     }
 }
 
-// show both yahoo and email accounts in same view - here accountIds are private to me, but anyone can change url with their accountIds
+// Clicking yahoo logo will redirect to both mailbox view
+// Note - here accountIds are private to me, but anyone can change url with their mailbox accountIds
 function fixYahooLogoLink() {
     const logo = document.getElementById('ybar-logo');
     if (logo) {
@@ -74,6 +75,7 @@ function redirectToInbox() {
 let lastUrl = location.href;
 redirectToInbox();
 
+// hides inline advertisements in list of emails
 function hideInlineAdsInList() {
     document.querySelectorAll('[data-test-id="virtual-list"] ul li').forEach(li => {
         if (li.querySelector('a[href*="taboola.com"]')) {

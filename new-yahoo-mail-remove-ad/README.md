@@ -1,6 +1,6 @@
 # Yahoo Mail: Remove Advertisement — Chrome Extension
 
-Removes ads and cleans up the UI in new Yahoo Mail.
+Removes ads and cleans up the UI in new Yahoo Mail UI.
 
 ---
 
@@ -23,7 +23,7 @@ Removes ads and cleans up the UI in new Yahoo Mail.
 | **Removes inline ad in mail list** | Hides Taboola ad injected inside the virtual mail list without breaking Yahoo's virtualizer |
 | **Removes upgrade prompt** | Hides the top bar button that promotes Yahoo Premium |
 | **Redirects on load** | Redirects `mail.yahoo.com` to the search/inbox view on first load per session |
-| **Fixes Yahoo logo link** | Overrides the Yahoo logo href to point to the correct inbox URL |
+| **Fixes Yahoo logo link** | Clicking the Yahoo logo redirects to a combined view of both mailboxes. The `accountIds` in the URL are private — update them in `content.js` with your own mailbox account IDs |
 | **Bolder unread messages** | Increases font weight and size for unread message rows |
 | **Right spacing** | Adds 15px right margin to the main email content area |
 | **Hidden scrollbars** | Hides scrollbar on left panel (both icon-only and icon+name views) while keeping scroll functionality |
