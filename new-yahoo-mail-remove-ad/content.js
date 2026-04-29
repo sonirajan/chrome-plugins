@@ -14,7 +14,7 @@ function injectStyles() {
     }
 
     /* remove ad section */
-    section.fo_Z1Gyd3M.b_n.P_1AjgO4.Y_2vDXFj.c2a1BVy_F.cYeoTE_BB.cYeoRt_FT.c2a1BW5_0.o_h.D_F.ek_BB.ab_FT[data-test-id] {
+    [data-test-id="novation-right-rail"] {
       display: none !important;
     }
   `;
