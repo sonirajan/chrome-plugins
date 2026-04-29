@@ -3,9 +3,9 @@ function injectStyles() {
     const style = document.createElement('style');
     style.id = 'yhoo-style-fix';
     style.textContent = `
-    /* little more dark fonts for subject and email of unread messages */
-    #Atom .u_elT {
-      font-weight: 900;
+    /* little more dark fonts for subject and email of unread messages */ 
+    li:has([id^="unread-message-status"]) * {
+      font-weight: 900 !important;
     }
 
     /* add 15px margin on right of middle main mail content container */
