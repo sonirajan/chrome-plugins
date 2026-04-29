@@ -74,9 +74,19 @@ function redirectToInbox() {
 let lastUrl = location.href;
 redirectToInbox();
 
+function hideInlineAdsInList() {
+    document.querySelectorAll('[data-test-id="virtual-list"] ul li').forEach(li => {
+        if (li.querySelector('a[href*="taboola.com"]')) {
+            const inner = li.querySelector('div');
+            if (inner) inner.style.setProperty('display', 'none', 'important');
+        }
+    });
+}
+
 fixYahooLogoLink();
 injectStyles();
 fixLayout();
+hideInlineAdsInList();
 
 new MutationObserver(() => {
     if (location.href !== lastUrl) {
@@ -86,6 +96,7 @@ new MutationObserver(() => {
     injectStyles();
     fixLayout();
     fixYahooLogoLink();
+    hideInlineAdsInList();
 }).observe(document.body, {
     childList: true,
     subtree: true,
