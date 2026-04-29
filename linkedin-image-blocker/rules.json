@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "media.licdn.com",
+      "resourceTypes": ["image", "media"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "static.licdn.com/aero-v1/sc/h/",
+      "resourceTypes": ["image", "media"]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "dms.licdn.com",
+      "resourceTypes": ["image", "media"]
+    }
+  }
+]

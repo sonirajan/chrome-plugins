@@ -1,0 +1,22 @@
+/*
+ * LinkedIn Image Blocker – blocker.css v2
+ *
+ * CSS is now a lightweight safety net only.
+ * content.js handles the real work by swapping src → placeholder data URL.
+ * We only need to fix layout issues where broken images cause collapsing containers.
+ */
+
+/* Prevent flash of broken image before JS runs */
+img[src*="licdn.com"],
+img[data-delayed-url*="licdn.com"],
+img[data-ghost-url*="licdn.com"] {
+  content: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23d6d6d6'/%3E%3Ccircle cx='50' cy='38' r='17' fill='%23a0a0a0'/%3E%3Cellipse cx='50' cy='85' rx='28' ry='20' fill='%23a0a0a0'/%3E%3C/svg%3E");
+}
+
+/* Ensure avatar wrappers don't collapse to 0 height */
+.presence-entity,
+.presence-entity__container,
+.msg-selectable-entity,
+.msg-conversation-listitem__link {
+  min-height: 1px;
+}
