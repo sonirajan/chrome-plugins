@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Yahoo Mail: Remove advertisement",
+  "version": "1.0",
+  "description": "Extends email area after removing advertisement in new Yahoo Mail. Bolder unread fonts in dark theme. Adds spacing to the right of email area.",
+  "content_scripts": [
+    {
+      "matches": ["*://mail.yahoo.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
