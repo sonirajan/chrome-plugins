@@ -13,8 +13,13 @@ function injectStyles() {
       margin-right: 15px !important;
     }
 
-    /* remove ad section */
+    /* remove ad section on right of mail */
     [data-test-id="novation-right-rail"] {
+      display: none !important;
+    }
+    
+    /* remove ad section on bottom of mail after deleting spam */
+    [data-test-id="leaderboard-ad"] {
       display: none !important;
     }
   `;
