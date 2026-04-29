@@ -23,6 +23,11 @@ function injectStyles() {
     [data-test-id="leaderboard-ad"] {
       display: none !important;
     }
+    
+    /* removed top bar button that convert to premium user */
+    [id="ybar-inserted-content"] {
+      display: none !important;
+    }
   `;
     document.head.appendChild(style);
 }
