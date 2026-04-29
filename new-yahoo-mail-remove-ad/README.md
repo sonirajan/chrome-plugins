@@ -20,7 +20,10 @@ Removes ads and cleans up the UI in new Yahoo Mail.
 |-----|---------|
 | **Removes right-side ad column** | Hides `novation-right-rail` and expands email area to fill the space |
 | **Removes bottom ad** | Hides leaderboard ad that appears after deleting spam |
+| **Removes inline ad in mail list** | Hides Taboola ad injected inside the virtual mail list without breaking Yahoo's virtualizer |
 | **Removes upgrade prompt** | Hides the top bar button that promotes Yahoo Premium |
+| **Redirects on load** | Redirects `mail.yahoo.com` to the search/inbox view on first load per session |
+| **Fixes Yahoo logo link** | Overrides the Yahoo logo href to point to the correct inbox URL |
 | **Bolder unread messages** | Increases font weight and size for unread message rows |
 | **Right spacing** | Adds 15px right margin to the main email content area |
 | **Hidden scrollbars** | Hides scrollbar on left panel (both icon-only and icon+name views) while keeping scroll functionality |
@@ -53,6 +56,10 @@ All selectors use stable `data-test-id` attributes or semantic HTML — they sho
 The grid fix targets `#mail-app-component-container`. If Yahoo renames this:
 1. Inspect the main app wrapper div
 2. Update `document.getElementById('mail-app-component-container')` in `content.js`
+
+**Crash when scrolling mail list**
+
+The inline ad removal hides the ad content but keeps the `li` intact so Yahoo's virtual list renderer stays stable. If Yahoo changes their ad network from Taboola, update the `href*="taboola.com"` selector in `removeAdLi()`.
 
 ---
 
