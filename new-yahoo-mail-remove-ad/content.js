@@ -56,12 +56,22 @@ function fixLayout() {
     }
 }
 
+// show both yahoo and email accounts in same view - here accountIds are private to me, but anyone can change url with their accountIds
+function fixYahooLogoLink() {
+    const logo = document.getElementById('ybar-logo');
+    if (logo) {
+        logo.href = 'https://mail.yahoo.com/n/search/accountIds=1&accountIds=40001';
+    }
+}
+
+fixYahooLogoLink();
 injectStyles();
 fixLayout();
 
 new MutationObserver(() => {
     injectStyles();
     fixLayout();
+    fixYahooLogoLink();
 }).observe(document.body, {
     childList: true,
     subtree: true,
