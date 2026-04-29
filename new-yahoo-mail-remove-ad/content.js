@@ -6,6 +6,7 @@ function injectStyles() {
     /* little more dark fonts for subject and email of unread messages */ 
     li:has([id^="unread-message-status"]) * {
       font-weight: 900 !important;
+      font-size: 16px;
     }
 
     /* add 15px margin on right of middle main mail content container */
