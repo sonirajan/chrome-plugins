@@ -28,6 +28,22 @@ function injectStyles() {
     [id="ybar-inserted-content"] {
       display: none !important;
     }
+        
+    /* hide scrollbar but keep scrolling for left panel with icon only view */
+    [data-test-id="novation-left-rail"] {
+      scrollbar-width: none !important;
+    }
+    [data-test-id="novation-left-rail"]::-webkit-scrollbar {
+      display: none !important;
+    }
+    
+    /* hide scrollbar but keep scrolling for left panel with icon and name view */
+    [data-test-id="navigable-list"] {
+      scrollbar-width: none !important;
+    }
+    [data-test-id="navigable-list"]::-webkit-scrollbar {
+      display: none !important;
+    }
   `;
     document.head.appendChild(style);
 }
