@@ -1,17 +1,16 @@
 # Yahoo Mail: Remove Advertisement — Chrome Extension
 
-Removes the ad section in new Yahoo Mail and extends the email area to fill the empty space.
+Removes ads and cleans up the UI in new Yahoo Mail.
 
 ---
 
 ## Setup
 
-1. Download or clone this repository to your local machine
-2. Open Chrome and go to `chrome://extensions`
-3. Toggle **Developer mode** on (top-right corner)
-4. Click **Load unpacked**
-5. Select the project folder containing `manifest.json` and `content.js`
-6. Open [Yahoo Mail](https://mail.yahoo.com) — the extension activates automatically
+1. Open Chrome and go to `chrome://extensions`
+2. Toggle **Developer mode** on (top-right corner)
+3. Click **Load unpacked**
+4. Select this folder
+5. Open [Yahoo Mail](https://mail.yahoo.com) — the extension activates automatically
 
 ---
 
@@ -19,10 +18,12 @@ Removes the ad section in new Yahoo Mail and extends the email area to fill the 
 
 | Fix | Details |
 |-----|---------|
-| **Expands email area** | Removes right-side ad column and fills the empty space |
-| **Bolder unread fonts** | Increases font weight for unread message subjects in dark theme |
+| **Removes right-side ad column** | Hides `novation-right-rail` and expands email area to fill the space |
+| **Removes bottom ad** | Hides leaderboard ad that appears after deleting spam |
+| **Removes upgrade prompt** | Hides the top bar button that promotes Yahoo Premium |
+| **Bolder unread messages** | Increases font weight and size for unread message rows |
 | **Right spacing** | Adds 15px right margin to the main email content area |
-| **Hides ad section** | Removes the ad `<section>` element from the DOM |
+| **Hidden scrollbars** | Hides scrollbar on left panel (both icon-only and icon+name views) while keeping scroll functionality |
 
 ---
 
@@ -38,20 +39,20 @@ Removes the ad section in new Yahoo Mail and extends the email area to fill the 
 
 ## Troubleshooting
 
-**Extension not working after Yahoo update**
+**A fix stopped working after a Yahoo update**
 
-Yahoo's hashed CSS class names (e.g. `fo_Z1Gyd3M`) change on deploys. If the ad section reappears:
+All selectors use stable `data-test-id` attributes or semantic HTML — they should survive most Yahoo deploys. If something breaks:
 
-1. Open Yahoo Mail → right-click the ad area → **Inspect**
-2. Find the updated selector or `data-test-id`
+1. Open Yahoo Mail → right-click the element → **Inspect**
+2. Find the updated `data-test-id`
 3. Update the selector in `content.js`
 4. Refresh the extension (see above)
 
 **Layout not expanding**
 
-The grid fix targets `#mail-app-component-container`. If Yahoo renames this ID:
+The grid fix targets `#mail-app-component-container`. If Yahoo renames this:
 1. Inspect the main app wrapper div
-2. Update `document.getElementById('mail-app-component-container')` in `content.js` with the new ID
+2. Update `document.getElementById('mail-app-component-container')` in `content.js`
 
 ---
 
