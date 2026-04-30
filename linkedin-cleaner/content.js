@@ -167,12 +167,21 @@ document.addEventListener('play', (e) => {
 
 // ── Remove advertisement iframes ─────────────────────────────────────────────
 function removeAdIframes(root) {
-  const iframes = root.querySelectorAll ? root.querySelectorAll('iframe[title="advertisement"]') : [];
-  for (const el of iframes) el.remove();
+  const iframes = root.querySelectorAll
+      ? root.querySelectorAll('iframe[title="advertisement"], iframe[componentkey*="_ad"], iframe[src*="tscp-serving"]')
+      : [];
+  for (const el of iframes) el.style.setProperty('display', 'none', 'important');
+
+  const sections = root.querySelectorAll
+      ? root.querySelectorAll('section.ad-banner-container')
+      : [];
+  for (const el of sections) el.style.setProperty('display', 'none', 'important');
+
+  const footers = root.querySelectorAll ? root.querySelectorAll('footer') : [];
+  for (const el of footers) el.remove();
 }
 
 removeAdIframes(document.documentElement);
-
 const adObserver = new MutationObserver((mutations) => {
   for (const mut of mutations) {
     for (const node of mut.addedNodes) {
@@ -182,3 +191,53 @@ const adObserver = new MutationObserver((mutations) => {
 });
 
 adObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+// ── Catch lazy images entering viewport ──────────────────────────────────────
+const intersectionObserver = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      if (isLinkedInImage(img)) replaceWithPlaceholder(img);
+    }
+  }
+});
+
+function observeLazyImages(root) {
+  const imgs = root.querySelectorAll ? root.querySelectorAll('img.lazy-image') : [];
+  for (const img of imgs) intersectionObserver.observe(img);
+}
+
+observeLazyImages(document.documentElement);
+
+
+// ── Single consolidated observer ─────────────────────────────────────────────
+let debounceTimer;
+
+const unifiedObserver = new MutationObserver((mutations) => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    for (const mut of mutations) {
+      if (mut.type === 'childList') {
+        for (const node of mut.addedNodes) {
+          if (node.nodeType !== 1) continue;
+          processNode(node);
+          observeLazyImages(node);
+          hidePromotedPosts(node);
+          removeVideos(node);
+          removeAdIframes(node);
+        }
+      } else if (mut.type === 'attributes') {
+        const el = mut.target;
+        if (el.tagName === 'IMG' && isLinkedInImage(el)) replaceWithPlaceholder(el);
+        if (el.tagName !== 'IMG') blockBackgroundImages(el);
+      }
+    }
+  }, 150);
+});
+
+unifiedObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: WATCHED_ATTRS,
+});
