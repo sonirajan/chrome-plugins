@@ -83,6 +83,4 @@ Removes any `<iframe title="advertisement">` element found anywhere in the page,
 ## Known Limitations
 
 - Video poster (gray thumbnail) may still be partially visible in some feed layouts
-- Company/school logo images are not blocked (intentional — only member photos are targeted)
-- Toggle requires a tab reload to take full effect
 - LinkedIn occasionally updates its DOM structure and CSS class names, which may require selector updates
