@@ -22,13 +22,12 @@ function isLinkedInImage(img) {
       LICDN_PATTERN.test(img.getAttribute('data-delayed-url') || '') ||
       LICDN_PATTERN.test(img.getAttribute('data-ghost-url') || '') ||
       LICDN_PATTERN.test(img.getAttribute('data-src') || '') ||
-      img.classList.contains('ghost-person') ||
-      img.classList.contains('lazy-image')
+      img.classList.contains('ghost-person')
   );
 }
 
 function replaceWithPlaceholder(img) {
-  // AFTER — remove the early return, let re-processing happen
+  if (img.__liBlocked) return;
   img.__liBlocked = true;
 
   img.setAttribute('src', PLACEHOLDER_DATA_URL);
@@ -41,6 +40,19 @@ function replaceWithPlaceholder(img) {
   img.style.removeProperty('visibility');
   img.style.removeProperty('opacity');
   img.style.setProperty('display', 'block', 'important');
+
+  // Intercept LinkedIn JS trying to re-set src back to CDN
+  const descriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+  if (descriptor) {
+    Object.defineProperty(img, 'src', {
+      get: () => PLACEHOLDER_DATA_URL,
+      set: (val) => {
+        if (LICDN_PATTERN.test(val)) return; // silently drop CDN urls
+        descriptor.set.call(img, val);
+      },
+      configurable: true,
+    });
+  }
 }
 
 function blockBackgroundImages(el) {
@@ -77,6 +89,26 @@ function processNode(root) {
 // Run on initial DOM
 processNode(document.documentElement);
 
+// Watch for dynamic changes (SPA nav, lazy load, infinite scroll)
+const observer = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    if (mut.type === 'childList') {
+      for (const node of mut.addedNodes) processNode(node);
+    } else if (mut.type === 'attributes') {
+      const el = mut.target;
+      if (el.tagName === 'IMG' && isLinkedInImage(el)) replaceWithPlaceholder(el);
+      if (el.tagName !== 'IMG') blockBackgroundImages(el);
+    }
+  }
+});
+
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: WATCHED_ATTRS,
+});
+
 // ── Hide promoted feed items ──────────────────────────────────────────────────
 function hidePromotedPosts(root) {
   const els = root.querySelectorAll ? root.querySelectorAll('p, span') : [];
@@ -89,6 +121,16 @@ function hidePromotedPosts(root) {
 }
 
 hidePromotedPosts(document.documentElement);
+
+const promoObserver = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    for (const node of mut.addedNodes) {
+      if (node.nodeType === 1) hidePromotedPosts(node);
+    }
+  }
+});
+
+promoObserver.observe(document.documentElement, { childList: true, subtree: true });
 
 
 // ── Remove feed videos ───────────────────────────────────────────────────────
@@ -103,6 +145,16 @@ function removeVideos(root) {
 
 removeVideos(document.documentElement);
 
+const videoObserver = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    for (const node of mut.addedNodes) {
+      if (node.nodeType === 1) removeVideos(node);
+    }
+  }
+});
+
+videoObserver.observe(document.documentElement, { childList: true, subtree: true });
+
 // ── Block video playback via event interception ───────────────────────────────
 document.addEventListener('play', (e) => {
   if (e.target.tagName === 'VIDEO') {
@@ -115,41 +167,18 @@ document.addEventListener('play', (e) => {
 
 // ── Remove advertisement iframes ─────────────────────────────────────────────
 function removeAdIframes(root) {
-  const iframes = root.querySelectorAll
-      ? root.querySelectorAll('iframe[title="advertisement"], iframe[componentkey*="_ad"], iframe[src*="tscp-serving"]')
-      : [];
+  const iframes = root.querySelectorAll ? root.querySelectorAll('iframe[title="advertisement"]') : [];
   for (const el of iframes) el.remove();
 }
 
 removeAdIframes(document.documentElement);
 
-// ── Single consolidated observer ─────────────────────────────────────────────
-let debounceTimer;
-
-const unifiedObserver = new MutationObserver((mutations) => {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    for (const mut of mutations) {
-      if (mut.type === 'childList') {
-        for (const node of mut.addedNodes) {
-          if (node.nodeType !== 1) continue;
-          processNode(node);
-          hidePromotedPosts(node);
-          removeVideos(node);
-          removeAdIframes(node);
-        }
-      } else if (mut.type === 'attributes') {
-        const el = mut.target;
-        if (el.tagName === 'IMG' && isLinkedInImage(el)) replaceWithPlaceholder(el);
-        if (el.tagName !== 'IMG') blockBackgroundImages(el);
-      }
+const adObserver = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    for (const node of mut.addedNodes) {
+      if (node.nodeType === 1) removeAdIframes(node);
     }
-  }, 50);
+  }
 });
 
-unifiedObserver.observe(document.documentElement, {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: WATCHED_ATTRS,
-});
+adObserver.observe(document.documentElement, { childList: true, subtree: true });
