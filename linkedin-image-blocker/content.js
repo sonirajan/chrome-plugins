@@ -108,3 +108,26 @@ observer.observe(document.documentElement, {
   attributes: true,
   attributeFilter: WATCHED_ATTRS,
 });
+
+// ── Hide promoted feed items ──────────────────────────────────────────────────
+function hidePromotedPosts(root) {
+  const els = root.querySelectorAll ? root.querySelectorAll('p, span') : [];
+  for (const el of els) {
+    if (el.textContent.trim().startsWith('Promoted')) {
+      const listItem = el.closest('[role="listitem"]');
+      if (listItem) listItem.style.setProperty('display', 'none', 'important');
+    }
+  }
+}
+
+hidePromotedPosts(document.documentElement);
+
+const promoObserver = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    for (const node of mut.addedNodes) {
+      if (node.nodeType === 1) hidePromotedPosts(node);
+    }
+  }
+});
+
+promoObserver.observe(document.documentElement, { childList: true, subtree: true });
