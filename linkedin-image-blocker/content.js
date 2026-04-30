@@ -163,3 +163,22 @@ document.addEventListener('play', (e) => {
     e.target.load();
   }
 }, true);
+
+
+// ── Remove advertisement iframes ─────────────────────────────────────────────
+function removeAdIframes(root) {
+  const iframes = root.querySelectorAll ? root.querySelectorAll('iframe[title="advertisement"]') : [];
+  for (const el of iframes) el.remove();
+}
+
+removeAdIframes(document.documentElement);
+
+const adObserver = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    for (const node of mut.addedNodes) {
+      if (node.nodeType === 1) removeAdIframes(node);
+    }
+  }
+});
+
+adObserver.observe(document.documentElement, { childList: true, subtree: true });
