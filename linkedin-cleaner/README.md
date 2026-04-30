@@ -36,8 +36,6 @@ linkedin-image-blocker-v2/
 ├── content.js          # DOM manipulation, observers, image/video/ad blocking
 ├── blocker.css         # CSS injected into LinkedIn pages
 ├── rules.json          # Declarative network rules blocking licdn.com image CDN
-├── popup.html          # Extension popup UI
-├── popup.js            # Popup toggle logic
 └── icons/
     ├── icon16.png
     ├── icon48.png
