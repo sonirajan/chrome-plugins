@@ -131,3 +131,29 @@ const promoObserver = new MutationObserver((mutations) => {
 });
 
 promoObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+
+// ── Remove feed videos ───────────────────────────────────────────────────────
+function removeVideos(root) {
+  const videos = root.querySelectorAll ? root.querySelectorAll('video') : [];
+  for (const v of videos) {
+    v.pause();
+    v.src = '';
+    v.load();
+    const container = v.closest('[data-vjs-player]') || v.closest('[aria-label="Video Player"]');
+    if (container) container.remove();
+    else v.remove();
+  }
+}
+
+removeVideos(document.documentElement);
+
+const videoObserver = new MutationObserver((mutations) => {
+  for (const mut of mutations) {
+    for (const node of mut.addedNodes) {
+      if (node.nodeType === 1) removeVideos(node);
+    }
+  }
+});
+
+videoObserver.observe(document.documentElement, { childList: true, subtree: true });
