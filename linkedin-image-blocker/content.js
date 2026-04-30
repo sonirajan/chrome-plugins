@@ -18,10 +18,11 @@ const WATCHED_ATTRS = ['src', 'data-delayed-url', 'data-ghost-url', 'data-src', 
 
 function isLinkedInImage(img) {
   return (
-    LICDN_PATTERN.test(img.getAttribute('src') || '') ||
-    LICDN_PATTERN.test(img.getAttribute('data-delayed-url') || '') ||
-    LICDN_PATTERN.test(img.getAttribute('data-ghost-url') || '') ||
-    LICDN_PATTERN.test(img.getAttribute('data-src') || '')
+      LICDN_PATTERN.test(img.getAttribute('src') || '') ||
+      LICDN_PATTERN.test(img.getAttribute('data-delayed-url') || '') ||
+      LICDN_PATTERN.test(img.getAttribute('data-ghost-url') || '') ||
+      LICDN_PATTERN.test(img.getAttribute('data-src') || '') ||
+      img.classList.contains('ghost-person')
   );
 }
 
@@ -77,6 +78,12 @@ function processNode(root) {
     ? root.querySelectorAll('[style*="licdn.com"]')
     : [];
   for (const el of bgEls) blockBackgroundImages(el);
+
+  const svgImages = root.querySelectorAll ? root.querySelectorAll('svg image[href*="licdn.com"], svg image[xlink\\:href*="licdn.com"]') : [];
+  for (const el of svgImages) {
+    el.removeAttribute('href');
+    el.removeAttribute('xlink:href');
+  }
 }
 
 // Run on initial DOM
