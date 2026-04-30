@@ -140,9 +140,6 @@ function removeVideos(root) {
     v.pause();
     v.src = '';
     v.load();
-    const container = v.closest('[data-vjs-player]') || v.closest('[aria-label="Video Player"]');
-    if (container) container.remove();
-    else v.remove();
   }
 }
 
@@ -157,3 +154,12 @@ const videoObserver = new MutationObserver((mutations) => {
 });
 
 videoObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+// ── Block video playback via event interception ───────────────────────────────
+document.addEventListener('play', (e) => {
+  if (e.target.tagName === 'VIDEO') {
+    e.target.pause();
+    e.target.src = '';
+    e.target.load();
+  }
+}, true);

@@ -20,3 +20,11 @@ img[data-ghost-url*="licdn.com"] {
 .msg-conversation-listitem__link {
   min-height: 1px;
 }
+
+[data-vjs-player],
+.video-js,
+.vjs-control-bar,
+.vjs-poster,
+.vjs-tech {
+  display: none !important;
+}
