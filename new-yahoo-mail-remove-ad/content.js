@@ -49,6 +49,11 @@ function injectStyles() {
     [data-test-id="navigable-list"]::-webkit-scrollbar {
       display: none !important;
     }
+    
+    /* hide cards (mails arrival) at top of multi mail box view (Search view) */
+    ul[aria-label="List of SRP-cards search result"] {
+      display: none !important;
+    }
   `;
     document.head.appendChild(style);
 }
