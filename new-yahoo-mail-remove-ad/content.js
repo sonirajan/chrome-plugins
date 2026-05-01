@@ -54,6 +54,11 @@ function injectStyles() {
     ul[aria-label="List of SRP-cards search result"] {
       display: none !important;
     }
+    
+    /* hide Yahoo Home button on top right */
+    a[aria-label="Yahoo Home"] {
+      display: none !important;
+    }
   `;
     document.head.appendChild(style);
 }
