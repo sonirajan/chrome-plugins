@@ -75,6 +75,14 @@
       font-weight: 600;
       letter-spacing: 0.01em;
     }
+
+    #today-text {
+      margin-top: 0.9em;
+      font-size: clamp(20px, 2vw, 32px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -84,6 +92,7 @@
   <div id="clock-wrap">
     <div id="time">00:00</div>
     <div id="date">Sunday, January 1</div>
+    <div id="today-text"></div>
   </div>
 
   <script src="clock.js"></script>
