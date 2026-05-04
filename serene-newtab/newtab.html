@@ -82,6 +82,19 @@
       letter-spacing: 0.02em;
       opacity: 1;
     }
+
+    #bg, #clock-wrap {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #bg.ready, #clock-wrap.ready {
+      opacity: 1;
+    }
+
+    body {
+      background-color: #111111;  /* near black — blends with any photo */
+    }
   </style>
 </head>
 <body>
