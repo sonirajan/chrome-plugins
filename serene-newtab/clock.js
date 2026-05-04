@@ -2,6 +2,10 @@ const timeEl = document.getElementById('time');
 const dateEl = document.getElementById('date');
 const TODAY_TEXT = "Pause. Are you working on your #1 priority?";
 
+const totalImages = 13;
+const randomNum = Math.floor(Math.random() * totalImages) + 1;
+document.getElementById('bg').style.backgroundImage = `url('imgs/bg${randomNum}.jpg')`;
+
 const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS = ['January','February','March','April','May','June',
                 'July','August','September','October','November','December'];
