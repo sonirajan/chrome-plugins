@@ -22,10 +22,23 @@ function tick() {
   todayEl.textContent = TODAY_TEXT;
 }
 
-// Pick random image, wait for load, then reveal everything
-const totalImages = 13;
-const randomNum   = Math.floor(Math.random() * totalImages) + 1;
-const imgUrl      = 'imgs/bg' + randomNum + '.jpg';
+// Shuffle images sequentially so all images are shown before repeating
+const totalImages = 23;
+function getNextImage() {
+  let queue = JSON.parse(localStorage.getItem('bgQueue') || '[]');
+  if (queue.length === 0) {
+    queue = Array.from({ length: totalImages }, (_, i) => i + 1);
+    // Fisher-Yates shuffle
+    for (let i = queue.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [queue[i], queue[j]] = [queue[j], queue[i]];
+    }
+  }
+  const next = queue.pop();
+  localStorage.setItem('bgQueue', JSON.stringify(queue));
+  return 'imgs/bg' + next + '.jpg';
+}
+const imgUrl = getNextImage();
 
 const preloader   = new Image();
 preloader.onload  = () => {
