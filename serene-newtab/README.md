@@ -35,11 +35,13 @@ serene-newtab/
 
 ## Adding More Background Images
 
-13 images (`bg1.jpg` … `bg13.jpg`) are already included. To add more, drop additional images into `imgs/` following the same naming pattern, then update the count in `clock.js`:
+A set of background images is included in the `imgs/` folder, named `bg1.jpg`, `bg2.jpg`, etc. To add more, drop images in following the same naming pattern and update one line in `clock.js`:
 
 ```js
-const totalImages = 13; // change this to match your image count
+const totalImages = 20; // set this to however many background images you have
 ```
+
+Images cycle in a shuffled order — all are shown before any repeats. The sequence resets automatically after every full cycle.
 
 Recommended size: **2190 × 1460 px** or larger for sharp display on high-DPI screens.
 
