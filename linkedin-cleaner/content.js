@@ -177,7 +177,9 @@ function removeAdIframes(root) {
       : [];
   for (const el of sections) el.style.setProperty('display', 'none', 'important');
 
-  const footers = root.querySelectorAll ? root.querySelectorAll('footer') : [];
+  const footers = root.querySelectorAll
+      ? root.querySelectorAll('footer:not([role="presentation"])')
+      : [];
   for (const el of footers) el.remove();
 }
 
