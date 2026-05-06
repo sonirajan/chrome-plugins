@@ -51,9 +51,12 @@ The extension can fetch random Hawaiian photos from Unsplash on every new tab.
 ```js
 const CONFIG = {
   ACCESS_KEY: 'your_unsplash_access_key_here',
-  USE_UNSPLASH: true   // set to false to use local images instead
+  USE_UNSPLASH: true,
+  QUERY: 'hawaii forest beach tropical'   // search terms for Unsplash photos
 };
 ```
+
+Update `QUERY` to change the type of photos shown. Use spaces between words for best results (e.g. `'hawaii beach'`, `'tropical waterfall'`, `'maui sunset'`).
 
 If the Unsplash API is unavailable (rate limit, network error, etc.), the extension automatically falls back to local images.
 

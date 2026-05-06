@@ -43,26 +43,27 @@ function getNextLocalImage() {
 
 function showImage(url) {
   const preloader = new Image();
-  preloader.src = url;
   preloader.onload = () => {
-    bgEl.style.backgroundImage = 'url("' + url + '")';
+    bgEl.style.backgroundImage = 'url("' + preloader.src + '")';
     bgEl.classList.add('ready');
     wrapEl.classList.add('ready');
     tick();
   };
   preloader.onerror = () => {
-    tick();   // show clock even if image fails
+    tick();
     wrapEl.classList.add('ready');
   };
+  preloader.src = url;
 }
 
 async function loadBackground() {
   if (CONFIG.USE_UNSPLASH && CONFIG.ACCESS_KEY) {
     try {
-      const res = await fetch('https://api.unsplash.com/photos/random?query=hawaii,tropical,beach&orientation=landscape&client_id=' + CONFIG.ACCESS_KEY);
+      const query = encodeURIComponent(CONFIG.QUERY);
+      const res = await fetch('https://api.unsplash.com/photos/random?query=' + query + '&orientation=landscape&client_id=' + CONFIG.ACCESS_KEY);
       if (!res.ok) throw new Error('Unsplash failed: ' + res.status);
       const data = await res.json();
-      showImage(data.urls.regular);
+      showImage(data.urls.full);
     } catch (e) {
       console.warn('Unsplash unavailable, falling back to local images.', e);
       showImage(getNextLocalImage());
