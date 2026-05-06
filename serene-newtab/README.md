@@ -4,10 +4,12 @@ A minimal Chrome extension that replaces the new tab page with a full-screen bac
 
 ## Features
 
-- Full-screen background image randomly selected from your `imgs/` folder on every new tab
-- Live clock in 12-hour format with small AM/PM indicator
+- Full-screen background image — random Unsplash Hawaiian photos or your own local images
+- Automatic fallback to local images if Unsplash API is unavailable
+- Local images cycle in shuffled order — all shown before any repeats
+- Live clock in 12-hour format with AM/PM indicator
 - Weekday and date below the clock
-- Daily goal/reminder text below the date — edit anytime in `clock.js`
+- Daily goal/reminder text — edit anytime in `clock.js`
 - SF Pro / system font for a clean, native feel
 - Subtle brightness filter so text stays legible over any photo
 
@@ -15,33 +17,64 @@ A minimal Chrome extension that replaces the new tab page with a full-screen bac
 
 ```
 serene-newtab/
-├── manifest.json   # Chrome extension config (Manifest V3)
-├── newtab.html     # New tab page + all CSS
-├── clock.js        # Clock logic, random image picker, daily reminder text
+├── manifest.json        # Chrome extension config (Manifest V3)
+├── newtab.html          # New tab page + all CSS
+├── clock.js             # Clock logic, image loading, daily reminder
+├── config.js            # Your Unsplash API key — DO NOT commit to git
+├── config.example.js    # Template for config.js — safe to commit
 ├── imgs/
-│   ├── bg1.jpg     # 13 images included out of the box
-│   ├── bg2.jpg
-│   └── ...bg13.jpg
+│   ├── bg1.jpg          # Local background images
+│   └── ...
+├── icons/
+│   └── ...              # Extension icons
 └── README.md
 ```
 
 ## Installation
 
 1. Clone or download this repo
-2. Go to `chrome://extensions`
-3. Enable **Developer mode** (top-right toggle)
-4. Click **Load unpacked** and select the `serene-newtab` folder
-5. Open a new tab — done, no setup needed
+2. Copy `config.example.js` to `config.js` and add your Unsplash API key (see below)
+3. Go to `chrome://extensions`
+4. Enable **Developer mode** (top-right toggle)
+5. Click **Load unpacked** and select the `serene-newtab` folder
+6. Open a new tab
 
-## Adding More Background Images
+## Unsplash API Setup
 
-A set of background images is included in the `imgs/` folder, named `bg1.jpg`, `bg2.jpg`, etc. To add more, drop images in following the same naming pattern and update one line in `clock.js`:
+The extension can fetch random Hawaiian photos from Unsplash on every new tab.
+
+1. Sign up at https://unsplash.com/developers
+2. Create a new app to get a free access key (50 requests/hour on free tier)
+3. Copy `config.example.js` to `config.js`
+4. Add your key:
 
 ```js
-const totalImages = 20; // set this to however many background images you have
+const CONFIG = {
+  ACCESS_KEY: 'your_unsplash_access_key_here',
+  USE_UNSPLASH: true   // set to false to use local images instead
+};
 ```
 
-Images cycle in a shuffled order — all are shown before any repeats. The sequence resets automatically after every full cycle.
+If the Unsplash API is unavailable (rate limit, network error, etc.), the extension automatically falls back to local images.
+
+## Using Local Images Only
+
+In `config.js`, set:
+
+```js
+const CONFIG = {
+    ACCESS_KEY: '',
+    USE_UNSPLASH: false
+};
+```
+
+Background images are included in the `imgs/` folder, named `bg1.jpg`, `bg2.jpg`, etc. To add more, drop images in following the same naming pattern and update one line in `clock.js`:
+
+```js
+const TOTAL_IMAGES = 23; // set this to however many bg images you have
+```
+
+Images cycle in shuffled order — all are shown before any repeats. The sequence resets automatically after every full cycle.
 
 Recommended size: **2190 × 1460 px** or larger for sharp display on high-DPI screens.
 
@@ -53,16 +86,18 @@ Open `clock.js` and edit this line:
 const TODAY_TEXT = "Pause. Are you working on your #1 priority?";
 ```
 
-Replace the text with your goal, intention, or reminder for the day. Reload the extension to see the update.
+Reload the extension to see the update.
 
 ## Customization
 
 | What | Where | How |
 |------|-------|-----|
-| Number of background images | `clock.js` | Update `totalImages` to match your image count |
+| Image source | `config.js` | Toggle `USE_UNSPLASH` true/false |
+| Unsplash API key | `config.js` | Set `ACCESS_KEY` |
+| Number of local images | `clock.js` | Update `TOTAL_IMAGES` |
 | Brightness of image | `newtab.html` | Adjust `filter: brightness(0.82)` (0–1) |
 | Clock size | `newtab.html` | Change `font-size` on `#time` |
-| Clock weight | `newtab.html` | Change `font-weight` on `#time` (200 = thin) |
+| Clock weight | `newtab.html` | Change `font-weight` on `#time` |
 | AM/PM size | `newtab.html` | Change `font-size` on `.ampm` |
-| Daily reminder text | `clock.js` | Edit the `TODAY_TEXT` variable |
+| Daily reminder text | `clock.js` | Edit `TODAY_TEXT` |
 | Daily reminder style | `newtab.html` | Edit CSS on `#today-text` |

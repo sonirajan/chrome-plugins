@@ -1,10 +1,13 @@
-const TODAY_TEXT = "Pause. Are you working on your #1 priority?";
+// ── Configuration ──────────────────────────────
+const TODAY_TEXT   = "Pause. Are you working on your #1 priority?";
+const TOTAL_IMAGES = 23; // only used when USE_UNSPLASH = false and want to shuffle local images
+// ───────────────────────────────────────────────
 
-const timeEl   = document.getElementById('time');
-const dateEl   = document.getElementById('date');
-const todayEl  = document.getElementById('today-text');
-const bgEl     = document.getElementById('bg');
-const wrapEl   = document.getElementById('clock-wrap');
+const timeEl  = document.getElementById('time');
+const dateEl  = document.getElementById('date');
+const todayEl = document.getElementById('today-text');
+const bgEl    = document.getElementById('bg');
+const wrapEl  = document.getElementById('clock-wrap');
 
 const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS = ['January','February','March','April','May','June',
@@ -23,12 +26,11 @@ function tick() {
 }
 
 // Shuffle images sequentially so all images are shown before repeating
-const totalImages = 23;
-function getNextImage() {
+function getNextLocalImage() {
   let queue = JSON.parse(localStorage.getItem('bgQueue') || '[]');
   if (queue.length === 0) {
-    queue = Array.from({ length: totalImages }, (_, i) => i + 1);
     // Fisher-Yates shuffle
+    queue = Array.from({ length: TOTAL_IMAGES }, (_, i) => i + 1);
     for (let i = queue.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [queue[i], queue[j]] = [queue[j], queue[i]];
@@ -38,21 +40,37 @@ function getNextImage() {
   localStorage.setItem('bgQueue', JSON.stringify(queue));
   return 'imgs/bg' + next + '.jpg';
 }
-const imgUrl = getNextImage();
 
-const preloader   = new Image();
-preloader.onload  = () => {
-  bgEl.style.backgroundImage = 'url("' + imgUrl + '")';
-  tick();
-  bgEl.classList.add('ready');
-  wrapEl.classList.add('ready');
-};
+function showImage(url) {
+  const preloader = new Image();
+  preloader.src = url;
+  preloader.onload = () => {
+    bgEl.style.backgroundImage = 'url("' + url + '")';
+    bgEl.classList.add('ready');
+    wrapEl.classList.add('ready');
+    tick();
+  };
+  preloader.onerror = () => {
+    tick();   // show clock even if image fails
+    wrapEl.classList.add('ready');
+  };
+}
 
-preloader.onerror = () => {
-  // show clock even if image fails
-  tick();
-  wrapEl.classList.add('ready');
-};
-preloader.src = imgUrl;
+async function loadBackground() {
+  if (CONFIG.USE_UNSPLASH && CONFIG.ACCESS_KEY) {
+    try {
+      const res = await fetch('https://api.unsplash.com/photos/random?query=hawaii,tropical,beach&orientation=landscape&client_id=' + CONFIG.ACCESS_KEY);
+      if (!res.ok) throw new Error('Unsplash failed: ' + res.status);
+      const data = await res.json();
+      showImage(data.urls.regular);
+    } catch (e) {
+      console.warn('Unsplash unavailable, falling back to local images.', e);
+      showImage(getNextLocalImage());
+    }
+  } else {
+    showImage(getNextLocalImage());
+  }
+}
 
+loadBackground();
 setInterval(tick, 1000);

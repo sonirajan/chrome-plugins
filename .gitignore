@@ -1,3 +1,10 @@
-/.idea
-/linkedin-cleaner/_metadata
-/serene-newtab/.idea
+# Ignores below files/folders anywhere in the repo
+.idea/
+_metadata/
+node_modules/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Extension secrets
+serene-newtab/config.js
