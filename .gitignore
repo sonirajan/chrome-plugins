@@ -5,6 +5,3 @@ node_modules/
 .vscode/
 .DS_Store
 Thumbs.db
-
-# Extension secrets
-serene-newtab/config.js

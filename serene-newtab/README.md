@@ -20,8 +20,8 @@ serene-newtab/
 ├── manifest.json        # Chrome extension config (Manifest V3)
 ├── newtab.html          # New tab page + all CSS
 ├── clock.js             # Clock logic, image loading, daily reminder
-├── config.js            # Your Unsplash API key — DO NOT commit to git
-├── config.example.js    # Template for config.js — safe to commit
+├── config.js            # Extension config — works out of the box with local images
+├── config.example.js    # Full config template with all options
 ├── imgs/
 │   ├── bg1.jpg          # Local background images
 │   └── ...
@@ -33,11 +33,10 @@ serene-newtab/
 ## Installation
 
 1. Clone or download this repo
-2. Copy `config.example.js` to `config.js` and add your Unsplash API key (see below)
-3. Go to `chrome://extensions`
-4. Enable **Developer mode** (top-right toggle)
-5. Click **Load unpacked** and select the `serene-newtab` folder
-6. Open a new tab
+2. Go to `chrome://extensions`
+3. Enable **Developer mode** (top-right toggle)
+4. Click **Load unpacked** and select the `serene-newtab` folder
+5. Open a new tab — works immediately with local images
 
 ## Unsplash API Setup
 
@@ -62,12 +61,10 @@ If the Unsplash API is unavailable (rate limit, network error, etc.), the extens
 
 ## Using Local Images Only
 
-In `config.js`, set:
+The extension uses local images by default. If you previously set up Unsplash, update `config.js` to:
 
 ```js
 const CONFIG = {
-    ACCESS_KEY: '',
-    QUERY: '',
     USE_UNSPLASH: false
 };
 ```
