@@ -41,7 +41,7 @@ serene-newtab/
 
 ## Unsplash API Setup
 
-The extension can fetch random Hawaiian photos from Unsplash on every new tab.
+[Unsplash](https://unsplash.com) is a free platform offering high-resolution photos contributed by photographers worldwide. This extension uses their API to fetch a fresh random photo on every new tab based on `QUERY` set in config.js file.
 
 1. Sign up at https://unsplash.com/developers
 2. Create a new app to get a free access key (50 requests/hour on free tier)
@@ -51,8 +51,8 @@ The extension can fetch random Hawaiian photos from Unsplash on every new tab.
 ```js
 const CONFIG = {
   ACCESS_KEY: 'your_unsplash_access_key_here',
-  USE_UNSPLASH: true,
-  QUERY: 'hawaii forest beach tropical'   // search terms for Unsplash photos
+  QUERY: 'hawaii forest beach tropical', // search terms for Unsplash photos
+  USE_UNSPLASH: true, // set it to `false` to use local image or `true` to use online unsplash image
 };
 ```
 
@@ -67,6 +67,7 @@ In `config.js`, set:
 ```js
 const CONFIG = {
     ACCESS_KEY: '',
+    QUERY: '',
     USE_UNSPLASH: false
 };
 ```
@@ -79,7 +80,7 @@ const TOTAL_IMAGES = 23; // set this to however many bg images you have
 
 Images cycle in shuffled order — all are shown before any repeats. The sequence resets automatically after every full cycle.
 
-Recommended size: **2190 × 1460 px** or larger for sharp display on high-DPI screens.
+Recommended size: **3024 × 1964 px** or larger for sharp display on Retina and high-DPI screens.
 
 ## Changing the Daily Reminder
 
@@ -97,6 +98,7 @@ Reload the extension to see the update.
 |------|-------|-----|
 | Image source | `config.js` | Toggle `USE_UNSPLASH` true/false |
 | Unsplash API key | `config.js` | Set `ACCESS_KEY` |
+| Unsplash search query | `config.js` | Update `QUERY` |
 | Number of local images | `clock.js` | Update `TOTAL_IMAGES` |
 | Brightness of image | `newtab.html` | Adjust `filter: brightness(0.82)` (0–1) |
 | Clock size | `newtab.html` | Change `font-size` on `#time` |
