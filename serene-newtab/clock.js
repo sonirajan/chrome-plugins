@@ -71,7 +71,11 @@ function showImage(url) {
 }
 
 async function loadBackground() {
-  if (CONFIG.USE_UNSPLASH && CONFIG.ACCESS_KEY) {
+  const useOnline = CONFIG.USE_UNSPLASH &&
+      CONFIG.ACCESS_KEY &&
+      Math.random() < CONFIG.UNSPLASH_PROBABILITY;
+
+  if (useOnline) {
     try {
       const query = encodeURIComponent(CONFIG.QUERY);
       const res = await fetch('https://api.unsplash.com/photos/random?query=' + query + '&orientation=landscape&client_id=' + CONFIG.ACCESS_KEY);

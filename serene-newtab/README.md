@@ -52,6 +52,7 @@ serene-newtab/
 const CONFIG = {
   ACCESS_KEY: 'your_unsplash_access_key_here',
   QUERY: 'hawaii forest beach tropical', // search terms for Unsplash photos
+  UNSPLASH_PROBABILITY: 0.5, // 0 = always local, 1 = always Unsplash
   USE_UNSPLASH: true, // set it to `false` to use local image or `true` to use online unsplash image
 };
 ```
@@ -93,6 +94,7 @@ Reload the extension after any changes.
 | Image source | `config.js` | Toggle `USE_UNSPLASH` true/false |
 | Unsplash API key | `config.js` | Set `ACCESS_KEY` |
 | Unsplash search query | `config.js` | Update `QUERY` |
+| Online vs local image mix | `config.js` | Adjust `UNSPLASH_PROBABILITY` (0–1) |
 | Number of local images | `clock.js` | Update `TOTAL_IMAGES` |
 | Brightness of image | `newtab.html` | Adjust `filter: brightness(0.82)` (0–1) |
 | Clock size | `newtab.html` | Change `font-size` on `#time` |
