@@ -1,11 +1,10 @@
 // ── Configuration ──────────────────────────────
-const TODAY_TEXT   = "Pause. Are you working on your #1 priority?";
 const TOTAL_IMAGES = 23; // only used when USE_UNSPLASH = false and want to shuffle local images
 // ───────────────────────────────────────────────
 
 const timeEl  = document.getElementById('time');
 const dateEl  = document.getElementById('date');
-const todayEl = document.getElementById('today-text');
+const quoteEl = document.getElementById('today-text');
 const bgEl    = document.getElementById('bg');
 const wrapEl  = document.getElementById('clock-wrap');
 
@@ -15,14 +14,29 @@ const MONTHS = ['January','February','March','April','May','June',
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
+function getNextQuote() {
+  let queue = JSON.parse(localStorage.getItem('quoteQueue') || '[]');
+  if (queue.length === 0) {
+    queue = Array.from({ length: QUOTES.length }, (_, i) => i);
+    for (let i = queue.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [queue[i], queue[j]] = [queue[j], queue[i]];
+    }
+  }
+  const next = queue.pop();
+  localStorage.setItem('quoteQueue', JSON.stringify(queue));
+  return QUOTES[next];
+}
+const todayQuote = getNextQuote();
+quoteEl.textContent = todayQuote;
+
 function tick() {
   const now  = new Date();
   const h24  = now.getHours();
   const ampm = h24 >= 12 ? 'PM' : 'AM';
   const h12  = h24 % 12 || 12;
-  timeEl.innerHTML = h12 + ':' + pad(now.getMinutes()) + ' <span class="ampm">' + ampm + '</span>';
+  timeEl.innerHTML = h12 + ':' + pad(now.getMinutes()) + '<span class="ampm">' + ampm + '</span>';
   dateEl.textContent = DAYS[now.getDay()] + ', ' + MONTHS[now.getMonth()] + ' ' + now.getDate();
-  todayEl.textContent = TODAY_TEXT;
 }
 
 // Shuffle images sequentially so all images are shown before repeating

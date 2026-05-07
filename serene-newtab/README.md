@@ -9,7 +9,7 @@ A minimal Chrome extension that replaces the new tab page with a full-screen bac
 - Local images cycle in shuffled order — all shown before any repeats
 - Live clock in 12-hour format with AM/PM indicator
 - Weekday and date below the clock
-- Daily goal/reminder text — edit anytime in `clock.js`
+- Motivational quotes cycle in shuffled order — all shown before any repeats
 - SF Pro / system font for a clean, native feel
 - Subtle brightness filter so text stays legible over any photo
 
@@ -19,7 +19,8 @@ A minimal Chrome extension that replaces the new tab page with a full-screen bac
 serene-newtab/
 ├── manifest.json        # Chrome extension config (Manifest V3)
 ├── newtab.html          # New tab page + all CSS
-├── clock.js             # Clock logic, image loading, daily reminder
+├── clock.js             # Clock logic and image loading
+├── quotes.js            # Motivational quotes — edit to add your own
 ├── config.js            # Extension config — works out of the box with local images
 ├── config.example.js    # Full config template with all options
 ├── imgs/
@@ -79,15 +80,11 @@ Images cycle in shuffled order — all are shown before any repeats. The sequenc
 
 Recommended size: **3024 × 1964 px** or larger for sharp display on Retina and high-DPI screens.
 
-## Changing the Daily Reminder
+## Changing Motivational Quotes
 
-Open `clock.js` and edit this line:
+Open `quotes.js` to add, edit, or remove quotes. A new quote shows on every new tab, cycling through all before repeating.
 
-```js
-const TODAY_TEXT = "Pause. Are you working on your #1 priority?";
-```
-
-Reload the extension to see the update.
+Reload the extension after any changes.
 
 ## Customization
 
@@ -101,5 +98,5 @@ Reload the extension to see the update.
 | Clock size | `newtab.html` | Change `font-size` on `#time` |
 | Clock weight | `newtab.html` | Change `font-weight` on `#time` |
 | AM/PM size | `newtab.html` | Change `font-size` on `.ampm` |
-| Daily reminder text | `clock.js` | Edit `TODAY_TEXT` |
-| Daily reminder style | `newtab.html` | Edit CSS on `#today-text` |
+| Motivational quotes | `quotes.js` | Add/edit quotes in the `QUOTES` array |
+| Quote style | `newtab.html` | Edit CSS on `#today-text` |
