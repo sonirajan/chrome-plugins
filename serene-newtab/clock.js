@@ -30,6 +30,69 @@ function getNextQuote() {
 const todayQuote = getNextQuote();
 quoteEl.textContent = todayQuote;
 
+// ── Task management ──
+const taskPlaceholder  = document.getElementById('task-placeholder');
+const taskInputWrap    = document.getElementById('task-input-wrap');
+const taskInput        = document.getElementById('task-input');
+const taskCancel       = document.getElementById('task-cancel');
+const taskDisplayWrap  = document.getElementById('task-display-wrap');
+const taskDisplayText  = document.getElementById('task-display-text');
+const taskClear        = document.getElementById('task-clear');
+
+function showPlaceholder() {
+  taskPlaceholder.style.display  = 'block';
+  taskInputWrap.style.display    = 'none';
+  taskDisplayWrap.style.display  = 'none';
+}
+
+function showInput(prefill) {
+  taskPlaceholder.style.display  = 'none';
+  taskInputWrap.style.display    = 'flex';
+  taskDisplayWrap.style.display  = 'none';
+  taskInput.value = prefill || '';
+  taskInput.focus();
+}
+
+function showDisplay(text) {
+  taskPlaceholder.style.display  = 'none';
+  taskInputWrap.style.display    = 'none';
+  taskDisplayWrap.style.display  = 'flex';
+  taskDisplayText.textContent    = text;
+}
+
+function submitTask() {
+  const val = taskInput.value.trim();
+  if (val) {
+    localStorage.setItem('todayTask', val);
+    showDisplay(val);
+  } else {
+    localStorage.removeItem('todayTask');
+    showPlaceholder();
+  }
+}
+
+// Load saved task on page load
+const savedTask = localStorage.getItem('todayTask');
+if (savedTask) {
+  showDisplay(savedTask);
+} else {
+  showPlaceholder();
+}
+
+// Events
+taskPlaceholder.addEventListener('click', () => showInput());
+taskDisplayText.addEventListener('click', () => showInput(localStorage.getItem('todayTask')));
+taskCancel.addEventListener('click', () => {
+  const saved = localStorage.getItem('todayTask');
+  saved ? showDisplay(saved) : showPlaceholder();
+});
+taskClear.addEventListener('click', () => {
+  localStorage.removeItem('todayTask');
+  showPlaceholder();
+});
+taskInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitTask(); });
+taskInput.addEventListener('blur', submitTask);
+
 function tick() {
   const now  = new Date();
   const h24  = now.getHours();

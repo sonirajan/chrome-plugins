@@ -96,6 +96,81 @@
     body {
       background-color: #111111;  /* near black — blends with any photo */
     }
+
+    /* ── Task section ── */
+    #task-wrap {
+      margin-top: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2em;
+    }
+
+    #task-placeholder {
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 400;
+      opacity: 0.55;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      letter-spacing: 0.02em;
+    }
+    #task-placeholder:hover { opacity: 0.85; }
+
+    #task-input-wrap {
+      display: none;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    #task-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(255,255,255,0.6);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-align: center;
+      width: clamp(200px, 30vw, 480px);
+      padding: 0.2em 0;
+      outline: none;
+      text-shadow: none;
+      transition: border-color 0.2s;
+    }
+    #task-input::placeholder { color: rgba(255,255,255,0.4); font-weight: 400; }
+    #task-input:focus { border-bottom-color: rgba(255,255,255,0.9); }
+
+    #task-display-wrap {
+      display: none;
+      align-items: center;
+      gap: 0.6em;
+    }
+
+    #task-display-text {
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 0.1em;
+      transition: border-color 0.2s;
+    }
+    #task-display-text:hover { border-bottom-color: rgba(255,255,255,0.8); }
+
+    .task-btn {
+      font-size: 1.1em;
+      opacity: 0.5;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #ffffff;
+      text-shadow: none;
+      padding: 0;
+      line-height: 1;
+      transition: opacity 0.2s;
+    }
+    .task-btn:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -106,6 +181,19 @@
     <div id="time">00:00</div>
     <div id="date">Sunday, January 1</div>
     <div id="today-text"></div>
+    <div id="task-wrap">
+      <div id="task-placeholder">+ What's your #1 task today?</div>
+
+      <div id="task-input-wrap">
+        <input id="task-input" type="text" maxlength="80" placeholder="Type your task and press Enter" />
+        <button class="task-btn" id="task-cancel">×</button>
+      </div>
+
+      <div id="task-display-wrap">
+        <span id="task-display-text"></span>
+        <button class="task-btn" id="task-clear">×</button>
+      </div>
+    </div>
   </div>
 
   <script src="config.js"></script>

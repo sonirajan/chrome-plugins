@@ -1,6 +1,6 @@
 # Serene New Tab
 
-A minimal Chrome extension that replaces the new tab page with a full-screen background photo, live clock, date, and a daily focus reminder — inspired by the iOS lock screen aesthetic.
+A minimal Chrome extension that replaces the new tab page with a full-screen background photo, live clock, date, a daily focus reminder, and a daily #1 task input — inspired by the iOS lock screen aesthetic.
 
 ## Features
 
@@ -10,6 +10,7 @@ A minimal Chrome extension that replaces the new tab page with a full-screen bac
 - Live clock in 12-hour format with AM/PM indicator
 - Weekday and date below the clock
 - Motivational quotes cycle in shuffled order — all shown before any repeats
+- Daily #1 task — enter, persist across tabs, click to edit, × to clear
 - SF Pro / system font for a clean, native feel
 - Subtle brightness filter so text stays legible over any photo
 
@@ -102,3 +103,5 @@ Reload the extension after any changes.
 | AM/PM size | `newtab.html` | Change `font-size` on `.ampm` |
 | Motivational quotes | `quotes.js` | Add/edit quotes in the `QUOTES` array |
 | Quote style | `newtab.html` | Edit CSS on `#today-text` |
+| Task text style | `newtab.html` | Edit CSS on `#task-display-text` |
+| Task placeholder text | `newtab.html` | Edit `#task-placeholder` text |
