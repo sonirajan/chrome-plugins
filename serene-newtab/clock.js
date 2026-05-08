@@ -1,5 +1,5 @@
 // ── Configuration ──────────────────────────────
-const TOTAL_IMAGES = 27; // only used when USE_UNSPLASH = false and want to shuffle local images
+const TOTAL_IMAGES = 31; // only used when USE_UNSPLASH = false and want to shuffle local images
 // ───────────────────────────────────────────────
 
 const timeEl  = document.getElementById('time');
