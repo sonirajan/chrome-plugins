@@ -1,5 +1,5 @@
 // ── Configuration ──────────────────────────────
-const TOTAL_IMAGES = 31; // only used when USE_UNSPLASH = false and want to shuffle local images
+const TOTAL_LOCAL_IMAGES = 37; // only used when USE_UNSPLASH = false and want to shuffle local images
 // ───────────────────────────────────────────────
 
 const timeEl  = document.getElementById('time');
@@ -107,7 +107,7 @@ function getNextLocalImage() {
   let queue = JSON.parse(localStorage.getItem('bgQueue') || '[]');
   if (queue.length === 0) {
     // Fisher-Yates shuffle
-    queue = Array.from({ length: TOTAL_IMAGES }, (_, i) => i + 1);
+    queue = Array.from({ length: TOTAL_LOCAL_IMAGES }, (_, i) => i + 1);
     for (let i = queue.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [queue[i], queue[j]] = [queue[j], queue[i]];

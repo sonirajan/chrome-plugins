@@ -75,7 +75,7 @@ const CONFIG = {
 Background images are included in the `imgs/` folder, named `bg1.jpg`, `bg2.jpg`, etc. To add more, drop images in following the same naming pattern and update one line in `clock.js`:
 
 ```js
-const TOTAL_IMAGES = 23; // set this to however many bg images you have
+const TOTAL_LOCAL_IMAGES = 23; // set this to however many bg images you have
 ```
 
 Images cycle in shuffled order — all are shown before any repeats. The sequence resets automatically after every full cycle.
@@ -96,7 +96,7 @@ Reload the extension after any changes.
 | Unsplash API key | `config.js` | Set `ACCESS_KEY` |
 | Unsplash search query | `config.js` | Update `QUERY` |
 | Online vs local image mix | `config.js` | Adjust `UNSPLASH_PROBABILITY` (0–1) |
-| Number of local images | `clock.js` | Update `TOTAL_IMAGES` |
+| Number of local images | `clock.js` | Update `TOTAL_LOCAL_IMAGES` |
 | Brightness of image | `newtab.html` | Adjust `filter: brightness(0.82)` (0–1) |
 | Clock size | `newtab.html` | Change `font-size` on `#time` |
 | Clock weight | `newtab.html` | Change `font-weight` on `#time` |
