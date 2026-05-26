@@ -20,7 +20,7 @@ A minimal Chrome extension that replaces the new tab page with a full-screen bac
 serene-newtab/
 ├── manifest.json        # Chrome extension config (Manifest V3)
 ├── newtab.html          # New tab page + all CSS
-├── clock.js             # Clock logic and image loading
+├── newtab.js            # New Tab logic and image loading
 ├── quotes.js            # Motivational quotes — edit to add your own
 ├── config.js            # Extension config — works out of the box with local images
 ├── config.example.js    # Full config template with all options
@@ -72,7 +72,7 @@ const CONFIG = {
 };
 ```
 
-Background images are included in the `imgs/` folder, named `bg1.jpg`, `bg2.jpg`, etc. To add more, drop images in following the same naming pattern and update one line in `clock.js`:
+Background images are included in the `imgs/` folder, named `bg1.jpg`, `bg2.jpg`, etc. To add more, drop images in following the same naming pattern and update one line in `newtab.js`:
 
 ```js
 const TOTAL_LOCAL_IMAGES = 23; // set this to however many bg images you have
@@ -90,18 +90,18 @@ Reload the extension after any changes.
 
 ## Customization
 
-| What | Where | How |
-|------|-------|-----|
-| Image source | `config.js` | Toggle `USE_UNSPLASH` true/false |
-| Unsplash API key | `config.js` | Set `ACCESS_KEY` |
-| Unsplash search query | `config.js` | Update `QUERY` |
-| Online vs local image mix | `config.js` | Adjust `UNSPLASH_PROBABILITY` (0–1) |
-| Number of local images | `clock.js` | Update `TOTAL_LOCAL_IMAGES` |
+| What | Where         | How |
+|------|---------------|-----|
+| Image source | `config.js`   | Toggle `USE_UNSPLASH` true/false |
+| Unsplash API key | `config.js`   | Set `ACCESS_KEY` |
+| Unsplash search query | `config.js`   | Update `QUERY` |
+| Online vs local image mix | `config.js`   | Adjust `UNSPLASH_PROBABILITY` (0–1) |
+| Number of local images | `newtab.js`   | Update `TOTAL_LOCAL_IMAGES` |
 | Brightness of image | `newtab.html` | Adjust `filter: brightness(0.82)` (0–1) |
 | Clock size | `newtab.html` | Change `font-size` on `#time` |
 | Clock weight | `newtab.html` | Change `font-weight` on `#time` |
 | AM/PM size | `newtab.html` | Change `font-size` on `.ampm` |
-| Motivational quotes | `quotes.js` | Add/edit quotes in the `QUOTES` array |
+| Motivational quotes | `quotes.js`   | Add/edit quotes in the `QUOTES` array |
 | Quote style | `newtab.html` | Edit CSS on `#today-text` |
 | Task text style | `newtab.html` | Edit CSS on `#task-display-text` |
 | Task placeholder text | `newtab.html` | Edit `#task-placeholder` text |
