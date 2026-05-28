@@ -96,11 +96,7 @@ function hideInlineAdsInList() {
         if (li.querySelector('a[href*="taboola.com"]')) {
             const inner = li.querySelector('div');
             if (inner) inner.style.setProperty('display', 'none', 'important');
-        }
-    });
-
-    document.querySelectorAll('[data-test-id="virtual-list"] ul li').forEach(li => {
-        if (li.querySelector('a[data-test-id="search-ad"]')) {
+        } else if (li.querySelector('a[data-test-id="search-ad"]')) {
             li.style.setProperty('display', 'none', 'important');
         }
     });
