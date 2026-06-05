@@ -22,7 +22,6 @@ Removes ads and cleans up the UI in new Yahoo Mail.
 | **Removes bottom ad** | Hides leaderboard ad that appears after deleting spam |
 | **Removes inline ad in mail list** | Hides Taboola ad injected inside the virtual mail list without breaking Yahoo's virtualizer |
 | **Removes upgrade prompt** | Hides the top bar button that promotes Yahoo Premium |
-| **Redirects on load** | Redirects `mail.yahoo.com` to the search/inbox view on first load per session |
 | **Fixes Yahoo logo link** | Clicking the Yahoo logo redirects to a combined view of both mailboxes. The `accountIds` in the URL are private — update them in `content.js` with your own mailbox account IDs |
 | **Hides search result cards** | Hides the SRP-cards search result list |
 | **Hides Yahoo Home link** | Hides the Yahoo Home anchor from the nav bar |

@@ -80,16 +80,6 @@ function fixYahooLogoLink() {
     }
 }
 
-// first time opening yahoo mail will redirect to both mailbox view
-function redirectToInbox() {
-    if (window.location.href.includes('/n/folders/1') && !sessionStorage.getItem('yhoo-redirected')) {
-        sessionStorage.setItem('yhoo-redirected', 'true');
-        window.location.replace('https://mail.yahoo.com/n/search/accountIds=1&accountIds=40001');
-    }
-}
-let lastUrl = location.href;
-redirectToInbox();
-
 // hides inline advertisements in list of emails
 function hideInlineAdsInList() {
     document.querySelectorAll('[data-test-id="virtual-list"] ul li').forEach(li => {
@@ -108,10 +98,6 @@ fixLayout();
 hideInlineAdsInList();
 
 new MutationObserver(() => {
-    if (location.href !== lastUrl) {
-        lastUrl = location.href;
-        redirectToInbox();
-    }
     injectStyles();
     fixLayout();
     fixYahooLogoLink();
