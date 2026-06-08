@@ -6,7 +6,8 @@
  * because the <img> element stays in the DOM at its natural size.
  */
 
-const LICDN_PATTERN = /licdn\.com\/(dms|media|aero-v1\/sc\/h)/i;
+//  dms and media only targets member photos, not UI assets
+const LICDN_PATTERN = /licdn\.com\/(dms|media)/i;
 
 // Gray circle + white person silhouette — works at any size
 const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#d6d6d6"/><circle cx="50" cy="38" r="17" fill="#a0a0a0"/><ellipse cx="50" cy="85" rx="28" ry="20" fill="#a0a0a0"/></svg>`;
@@ -155,8 +156,9 @@ const videoObserver = new MutationObserver((mutations) => {
 
 videoObserver.observe(document.documentElement, { childList: true, subtree: true });
 
-// ── Block video playback via event interception ───────────────────────────────
+// ── Block video playback via event interception (except /learning path) ───────────────────────────────
 document.addEventListener('play', (e) => {
+  if (window.location.pathname.startsWith('/learning')) return;
   if (e.target.tagName === 'VIDEO') {
     e.target.pause();
     e.target.src = '';
