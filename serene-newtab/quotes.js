@@ -30,6 +30,7 @@ const QUOTES = [
     "Take baby steps — small enough to accomplish, big enough to feel the progress and keep going.",
     "Is the current task valuable enough to cancel other work ? - If No, it is garbage work!",
     "Lots of things are urgent. But urgency and priority are absolutely not the same thing. Your default should be to do only your highest priority work. And then you can consider the urgency of that work to consider slightly changing the order you work on things.",
+    "I must lead by example for my daughter!",
 
     // Gujarati
     "યોગઃ કર્મશુ કૌશલમ! — કર્મમાં કુશળતા એ જ યોગ છે.",
