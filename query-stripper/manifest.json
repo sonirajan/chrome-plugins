@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Query Param Stripper",
+  "version": "1.0",
+  "description": "Strips all query parameters from URLs starting with http://localhost:63342/",
+  "permissions": [
+    "webNavigation",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:63342/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
