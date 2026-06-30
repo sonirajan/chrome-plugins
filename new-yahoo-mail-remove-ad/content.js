@@ -59,6 +59,11 @@ function injectStyles() {
     a[aria-label="Yahoo Home"] {
       display: none !important;
     }
+    
+    /* hide tooltips on left menu items that interfere with click */
+    [data-test-id="overlay-boundingbox"]:has([role="tooltip"]) {
+      display: none !important;
+    }
   `;
     document.head.appendChild(style);
 }
