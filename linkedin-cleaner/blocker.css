@@ -20,3 +20,9 @@
 .vjs-tech {
   display: none !important;
 }
+
+/* Hide image viewer prev/next buttons */
+[data-testid="button-prev"],
+[data-testid="button-next"] {
+  display: none !important;
+}
