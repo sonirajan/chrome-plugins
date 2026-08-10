@@ -31,6 +31,12 @@ const QUOTES = [
     "Is the current task valuable enough to cancel other work ? - If No, it is garbage work!",
     "Lots of things are urgent. But urgency and priority are absolutely not the same thing. Your default should be to do only your highest priority work. And then you can consider the urgency of that work to consider slightly changing the order you work on things.",
     "I must lead by example for my daughter!",
+    "I must suffer one of two things: the pain of discipline or the pain of regret",
+    "Nothing changes until something (or someone) pushes it to. No force = no change - Newton's 1st Law",
+    "Bigger goals need bigger or more sustained effort — the size of the push has to match the size of the mass. - Newton's 2nd Law",
+    "Whatever force you put out into your relationships, work, or habits, something comes back at you — often proportional. Every action has a reaction - Newton's 3rd Law",
+    "Nothing moves until I push. How much I move depends on how much force I apply, relative to the size of the problem. Everything I do eventually pushes something back at me. - Life parallels of Newton's 3 laws",
+    "You can reinvent yourself as many times as you need. New standards. New habits. New mindsets. It's never too late. You can change. Today, tomorrow, and as many times as it takes to create the life you want.",
 
     // Gujarati
     "યોગઃ કર્મશુ કૌશલમ! — કર્મમાં કુશળતા એ જ યોગ છે.",
