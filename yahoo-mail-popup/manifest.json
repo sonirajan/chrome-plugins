@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Yahoo Mail Popup",
+  "version": "1.0",
+  "description": "Click the toolbar icon to open Yahoo Mail in a small popup window. Close with Esc or the window's close button.",
+  "permissions": ["windows", "storage", "system.display"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.yahoo.com/*"],
+      "js": ["esc-close.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "Open Yahoo Mail"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
