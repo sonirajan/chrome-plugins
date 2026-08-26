@@ -11,7 +11,8 @@
     {
       "matches": ["https://mail.yahoo.com/*"],
       "js": ["esc-close.js"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
   "action": {

@@ -65,13 +65,26 @@ chrome.runtime.onMessage.addListener((message, sender) => {
 
   const senderWindowId = sender.tab.windowId;
 
-  // Only ever close the window we ourselves created and are tracking.
-  // Without this, pressing Esc on mail.yahoo.com in ANY window (including your
-  // main browsing window, if you had Yahoo Mail open there too) would close
-  // that window entirely.
-  if (senderWindowId !== yahooWindowId) {
-    return;
-  }
+  // Re-derive the truth from the actual window at close-time, instead of
+  // trusting the in-memory yahooWindowId. yahooWindowId can drift out of
+  // sync in edge cases (e.g. the service worker was restarted and lost its
+  // in-memory state, or the popup was reloaded/renavigated in a way that
+  // changed which window Chrome considers "current"). If we only trusted
+  // yahooWindowId, a mismatch would silently no-op both Esc AND the fallback
+  // close button, since they both funnel through this same check.
+  chrome.windows.get(senderWindowId).then((win) => {
+    if (win.type !== "popup") {
+      // Definitely not our popup (e.g. Yahoo Mail open in a normal tab in
+      // the main browsing window) — never close this.
+      console.log("[yahoo-mail-popup] Ignoring close request: window is not a popup", win);
+      return;
+    }
 
-  chrome.windows.remove(senderWindowId);
+    // It's a popup window containing mail.yahoo.com — safe to close, even if
+    // it doesn't match our stored yahooWindowId (that just means our tracking
+    // drifted; the window itself is still unambiguously our popup).
+    chrome.windows.remove(senderWindowId);
+  }).catch((err) => {
+    console.log("[yahoo-mail-popup] Could not look up sender window, not closing anything", err);
+  });
 });
