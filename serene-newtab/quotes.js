@@ -16,7 +16,7 @@ const QUOTES = [
     "NEVER EVER GIVE UP IN LIFE.",
     "Be so busy improving yourself that you have no time to criticize others.",
     "The hardest battle is between your old habits and your new standards.",
-    "Daily non-negotiables: Speak answers loudly, Practice coding, Apply a lot.",
+    "Daily non-negotiable: Speak answers loudly, Practice coding, Apply a lot.",
     "When you do hard work, stars automatically align and success comes from all fronts.",
     "Being an alpha is mastery of mind, body, communication and presence.",
     "Knowledge + confidence + execution = natural authority.",
@@ -37,7 +37,8 @@ const QUOTES = [
     "Whatever force you put out into your relationships, work, or habits, something comes back at you — often proportional. Every action has a reaction - Newton's 3rd Law",
     "Nothing moves until I push. How much I move depends on how much force I apply, relative to the size of the problem. Everything I do eventually pushes something back at me. - Life parallels of Newton's 3 laws",
     "You can reinvent yourself as many times as you need. New standards. New habits. New mindsets. It's never too late. You can change. Today, tomorrow, and as many times as it takes to create the life you want.",
-
+    "You need to separate your actions from your feelings! When you catch yourself thinking \"I don't feel like studying,\" you flip it to \"I'm unmotivated, so I'll study unmotivated. What kind of studying can I even do when I'm unmotivated?\"",
+    "The moment you take responsibility of everything in your life is the moment you can change anything.",
     // Gujarati
     "યોગઃ કર્મશુ કૌશલમ! — કર્મમાં કુશળતા એ જ યોગ છે.",
     "કર્મ કર, ફળ ની આશા ના રાખ.",

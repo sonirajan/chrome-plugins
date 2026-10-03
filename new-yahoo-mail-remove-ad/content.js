@@ -81,7 +81,7 @@ function fixLayout() {
 function fixYahooLogoLink() {
     const logo = document.getElementById('ybar-logo');
     if (logo) {
-        logo.href = 'https://mail.yahoo.com/n/search/accountIds=1&accountIds=40001';
+        logo.href = 'https://mail.yahoo.com/n/search/referrer=starred&keyword=is%253Astarred&accountIds=00_1';
     }
 }
 
