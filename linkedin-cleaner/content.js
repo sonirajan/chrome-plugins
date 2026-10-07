@@ -13,6 +13,7 @@ const ALLOWED_PATHS = [
 ];
 
 const ALLOWED_PROFILES = [
+  '/in/rajansoni/',
   '/in/yangshun/',
   '/in/gergelyorosz/',
   '/in/andrenader/',
@@ -20,8 +21,16 @@ const ALLOWED_PROFILES = [
   '/in/austenmc/',
   '/in/addyosmani/',
   '/in/prashant-yadav-lb/',
-  '/in/akshaymarch7/'
+  '/in/akshaymarch7/',
+  '/in/drhyman/',
+  '/in/adevnadia/',
+  '/in/hakeemshibly/',
+  '/in/neha-bhargava369/',
+  '/in/irinastanescu/',
+  '/in/jordancutler1/',
+  '/in/charca/'
 ];
+
 function isAllowedPage() {
   const path = window.location.pathname.replace(/\/$/, '') + '/'; // normalize: always trailing slash
   if (ALLOWED_PATHS.some(p => path.startsWith(p))) return true;
@@ -144,13 +153,28 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 
 // ── Block video playback ──────────────────────────────────────────────────────
 document.addEventListener('play', (e) => {
-  if (window.location.pathname.startsWith('/learning')) return;
+  if (isEffectivelyAllowed(window.location.pathname)) return;
   if (e.target.tagName === 'VIDEO') {
     e.target.pause();
     e.target.src = '';
     e.target.load();
   }
 }, true);
+
+// Inject video-hiding CSS only when blocking — removed from blocker.css so allowed pages see videos
+let videoStyleEl = null;
+function injectVideoCSS() {
+  if (videoStyleEl) return;
+  videoStyleEl = document.createElement('style');
+  videoStyleEl.textContent = `
+    [data-vjs-player], .video-js, .vjs-control-bar, .vjs-poster, .vjs-tech { display: none !important; }
+    [data-testid="button-prev"], [data-testid="button-next"] { display: none !important; }
+  `;
+  (document.head || document.documentElement).appendChild(videoStyleEl);
+}
+function removeVideoCSS() {
+  if (videoStyleEl) { videoStyleEl.remove(); videoStyleEl = null; }
+}
 
 // ── Unified observer ──────────────────────────────────────────────────────────
 let debounceTimer;
@@ -192,6 +216,7 @@ const unifiedObserver = new MutationObserver((mutations) => {
 
 // ── Start blocking or skip if allowed page ────────────────────────────────────
 function startBlocking() {
+  injectVideoCSS();
   processNode(document.documentElement);
   hidePromotedPosts(document.documentElement);
   removeVideos(document.documentElement);
@@ -245,6 +270,7 @@ setInterval(() => {
       startBlocking();
     } else if (!wasAllowed && isNowAllowed) {
       unifiedObserver.disconnect();
+      removeVideoCSS();
       window.location.reload();
     }
   }
