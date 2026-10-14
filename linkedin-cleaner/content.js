@@ -9,7 +9,8 @@
 const ALLOWED_PATHS = [
   '/learning',
   '/company/',
-  '/notifications/'
+  '/notifications/',
+  '/jobs/'
 ];
 
 const ALLOWED_PROFILES = [
